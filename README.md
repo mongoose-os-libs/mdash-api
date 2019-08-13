@@ -2,6 +2,7 @@
 
 ## Example
 ```c
+
 #include "mgos.h"
 
 #define USE_WIFI 0
@@ -48,15 +49,17 @@ static void wifi_cb(int ev, void *evd, void *arg) {
 }
 #else
 static void net_cb(int ev, void *evd, void *arg) {
-    switch (ev) {
-      case MGOS_NET_EV_IP_ACQUIRED: {
+  switch (ev) {
+    case MGOS_NET_EV_IP_ACQUIRED: {
       LOG(LL_INFO, ("%s", "MGOS_NET_EV_IP_ACQUIRED"));
 
       mgos_mdash_set_label("my_label");
       create_mdash_ui();
-        break;
-      }
+      break;
     }
+  }
+  (void) evd;
+  (void) arg;
 }
 #endif
 
