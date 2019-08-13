@@ -1,0 +1,21 @@
+author: Liviu Nicolescu <nliviu@gmail.com>
+type: lib
+description: Use mDash API to set a device label and create the UI
+version: 1.0
+
+manifest_version: 2017-09-29
+
+includes:
+  - include
+
+sources:
+  - src
+
+config_schema:
+# mDash settings
+  - ["mdash.device_id", "s", "", {title: "mdash device ID"}]
+  - ["mdash.api_key", "s", "", {title: "mdash API key"}]
+
+tags:
+  - c
+
