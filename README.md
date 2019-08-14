@@ -116,7 +116,7 @@ static void create_mdash_ui() {
 - Drawback -  the order of creating the widgets is fixed: value, input, toggle and button.
 - Advantage - a widget can be disabled at runtime. E.g. 
 ```yaml
-mos --port <serial,ws,mqtt port>` config-set mdash.value3.enable=false
+mos --port <serial,ws,mqtt port> config-set mdash.value3.enable=false
 ```
 
 ## Usage
