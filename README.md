@@ -112,7 +112,8 @@ static void create_mdash_ui() {
   mgos_mdash_widgets_free(widgets);
 }
 ```
-There is one drawback with this approach: the order of creating the widgets is value, input, toggle and button.
+Drawback -  the order of creating the widgets is fixed: value, input, toggle and button.
+Advantage - a widget can be disabled at runtime. E.g. `mos --port <serial,ws,mqtt port>` config-set mdash.value3.enable=false`
 
 ## Usage
 - Create a device in mDash
