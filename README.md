@@ -121,3 +121,7 @@ There is one drawback with this approach: the order of creating the widgets is v
 - `mos wifi SSID PASSWORD`
 - Provision the device in mDash
 - `mos --port <port> config-set mdash.device_id="<device ID from mDash>" mdash.api_key="<API key from mDash>" `
+
+## Refs
+[Device UI for remote control](https://mdash.net/docs/userguide/device-ui.md)
+
