@@ -103,7 +103,7 @@ config_schema:
   - ["mdash.button.icon", "fa-power-off"]
 ```
 - The code
-```
+```c
 static void create_mdash_ui() {
   struct mgos_mdash_widgets *widgets;
   if (mgos_mdash_widgets_create_from_config(&widgets)) {
