@@ -1,6 +1,6 @@
 # Use mDash API to set a device label and create the UI
 
-## Example
+## Example 1
 ```c
 
 #include "mgos.h"
@@ -73,6 +73,46 @@ enum mgos_app_init_result mgos_app_init(void) {
   return MGOS_APP_INIT_SUCCESS;
 }
 ```
+
+## Example 2
+- Define the widgets in the `mos.yml` of your application, e.g.
+```yaml
+config_schema:
+# mDash widgets
+  - ["mdash.toggle.title", "Switch LED on/off"]
+  - ["mdash.toggle.key", "state.reported.on"]
+
+  - ["mdash.value.title", "Uptime (s):"]
+  - ["mdash.value.key", "state.reported.uptime"]
+  
+  - ["mdash.value1.enable", true]   # enable this widget
+  - ["mdash.value1.title", "Min free RAM:"]
+  - ["mdash.value1.key", "state.reported.ram_min_free"]
+  
+  - ["mdash.value2.enable", true]   # enable this widget
+  - ["mdash.value2.title", "Free RAM:"]
+  - ["mdash.value2.key", "state.reported.ram_free"]
+  
+  - ["mdash.value3.enable", true]   # enable this widget
+  - ["mdash.value3.title", "Temp:"]
+  - ["mdash.value3.key", "state.reported.temp"]
+
+  - ["mdash.button.title", "Reboot"]
+  - ["mdash.button.method", "Sys.Reboot"]
+  - ["mdash.button.params", ""]
+  - ["mdash.button.icon", "fa-power-off"]
+```
+- The code
+```
+static void create_mdash_ui() {
+  struct mgos_mdash_widgets *widgets;
+  if (mgos_mdash_widgets_create_from_config(&widgets)) {
+    mgos_mdash_create_ui(widgets);
+  }
+  mgos_mdash_widgets_free(widgets);
+}
+```
+There is one drawback with this approach: the order of creating the widgets is value, input, toggle and button.
 
 ## Usage
 - Create a device in mDash
