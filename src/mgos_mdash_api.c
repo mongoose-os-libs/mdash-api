@@ -63,7 +63,6 @@ struct mgos_mdash_widget {
     } button;
     struct input {
       char *key;
-      char *icon;
     } input;
   };
 };
@@ -255,17 +254,15 @@ struct mgos_mdash_widget *mgos_mdash_widget_button_create(const char *title,
 /* Input: show and change any state.reported.KEY shadow value */
 /* {"type": "input", "icon": "fa-save", title: "Set LED pin", "key": "pin"} */
 struct mgos_mdash_widget *mgos_mdash_widget_input_create(const char *title,
-                                                         const char *key,
-                                                         const char *icon) {
-  if ((title == NULL) || (key == NULL) || (icon == NULL)) {
-    LOG(LL_ERROR, ("title, key and icon must be NOT null!"));
+                                                         const char *key) {
+  if ((title == NULL) || (key == NULL)) {
+    LOG(LL_ERROR, ("title and key must be NOT null!"));
     return NULL;
   }
   struct mgos_mdash_widget *p = calloc(1, sizeof(*p));
   p->type = MDASH_WIDGET_INPUT;
   p->title = strdup(title);
   p->input.key = strdup(key);
-  p->input.icon = strdup(icon);
   return p;
 }
 
@@ -297,9 +294,6 @@ void mgos_mdash_widget_free(struct mgos_mdash_widget **widget) {
       }
       break;
     case MDASH_WIDGET_INPUT:
-      if (p->input.icon != NULL) {
-        free(p->input.icon);
-      }
       if (p->input.key != NULL) {
         free(p->input.key);
       }
@@ -359,6 +353,218 @@ void mgos_mdash_widgets_free(struct mgos_mdash_widgets *widgets) {
     mgos_mdash_widget_free(&widgets->widgets[i]);
   }
   free(widgets->widgets);
+}
+
+/*
+struct mgos_config_mdash_value {
+  const char * title;
+  const char * key;
+};
+
+struct mgos_config_mdash_input {
+  const char * title;
+  const char * key;
+};
+
+struct mgos_config_mdash_toggle {
+  const char * title;
+  const char * key;
+};
+
+struct mgos_config_mdash_button {
+  const char * title;
+  const char * method;
+  const char * params;
+  const char * icon;
+};
+
+struct mgos_config_mdash {
+  const char * device_id;
+  const char * api_key;
+  struct mgos_config_mdash_value value;
+  struct mgos_config_mdash_value value1;
+  struct mgos_config_mdash_value value2;
+  struct mgos_config_mdash_value value3;
+  struct mgos_config_mdash_value value4;
+  struct mgos_config_mdash_input input;
+  struct mgos_config_mdash_input input1;
+  struct mgos_config_mdash_input input2;
+  struct mgos_config_mdash_input input3;
+  struct mgos_config_mdash_input input4;
+  struct mgos_config_mdash_toggle toggle;
+  struct mgos_config_mdash_toggle toggle1;
+  struct mgos_config_mdash_toggle toggle2;
+  struct mgos_config_mdash_button button;
+  struct mgos_config_mdash_button button1;
+  struct mgos_config_mdash_button button2;
+  struct mgos_config_mdash_button button3;
+};
+
+ */
+
+static const struct mgos_config_mdash_value *mdash_get_value(
+    const struct mgos_config_mdash *cfg, int index) {
+  if (cfg == NULL) {
+    return NULL;
+  }
+  switch (index) {
+    case 0:
+      return &cfg->value;
+    case 1:
+      return &cfg->value1;
+    case 2:
+      return &cfg->value2;
+    case 3:
+      return &cfg->value3;
+    case 4:
+      return &cfg->value4;
+    case 5:
+      return &cfg->value5;
+    case 6:
+      return &cfg->value6;
+    case 7:
+      return &cfg->value7;
+    case 8:
+      return &cfg->value8;
+    case 9:
+      return &cfg->value9;
+  }
+  return NULL;
+}
+
+static const struct mgos_config_mdash_input *mdash_get_input(
+    const struct mgos_config_mdash *cfg, int index) {
+  if (cfg == NULL) {
+    return NULL;
+  }
+  switch (index) {
+    case 0:
+      return &cfg->input;
+    case 1:
+      return &cfg->input1;
+    case 2:
+      return &cfg->input2;
+    case 3:
+      return &cfg->input3;
+    case 4:
+      return &cfg->input4;
+    case 5:
+      return &cfg->input5;
+    case 6:
+      return &cfg->input6;
+    case 7:
+      return &cfg->input7;
+    case 8:
+      return &cfg->input8;
+    case 9:
+      return &cfg->input9;
+  }
+  return NULL;
+}
+
+static const struct mgos_config_mdash_toggle *mdash_get_toggle(
+    const struct mgos_config_mdash *cfg, int index) {
+  if (cfg == NULL) {
+    return NULL;
+  }
+  switch (index) {
+    case 0:
+      return &cfg->toggle;
+    case 1:
+      return &cfg->toggle1;
+    case 2:
+      return &cfg->toggle2;
+  }
+  return NULL;
+}
+
+static const struct mgos_config_mdash_button *mdash_get_button(
+    const struct mgos_config_mdash *cfg, int index) {
+  if (cfg == NULL) {
+    return NULL;
+  }
+  switch (index) {
+    case 0:
+      return &cfg->button;
+    case 1:
+      return &cfg->button1;
+    case 2:
+      return &cfg->button2;
+  }
+  return NULL;
+}
+
+static void mdash_process_value(const struct mgos_config_mdash *cfg,
+                                struct mgos_mdash_widgets *widgets) {
+  for (int i = 0; i < 10; ++i) {
+    const struct mgos_config_mdash_value *p = mdash_get_value(cfg, i);
+    if (p->enable) {
+      struct mgos_mdash_widget *w =
+          mgos_mdash_widget_value_create(p->title, p->key);
+      if (w != NULL) {
+        mgos_mdash_widgets_add_widget(widgets, w);
+      }
+    }
+  }
+}
+
+static void mdash_process_input(const struct mgos_config_mdash *cfg,
+                                struct mgos_mdash_widgets *widgets) {
+  for (int i = 0; i < 10; ++i) {
+    const struct mgos_config_mdash_input *p = mdash_get_input(cfg, i);
+    if (p->enable) {
+      struct mgos_mdash_widget *w =
+          mgos_mdash_widget_input_create(p->title, p->key);
+      if (w != NULL) {
+        mgos_mdash_widgets_add_widget(widgets, w);
+      }
+    }
+  }
+}
+
+static void mdash_process_toggle(const struct mgos_config_mdash *cfg,
+                                 struct mgos_mdash_widgets *widgets) {
+  for (int i = 0; i < 3; ++i) {
+    const struct mgos_config_mdash_toggle *p = mdash_get_toggle(cfg, i);
+    if (p->enable) {
+      struct mgos_mdash_widget *w =
+          mgos_mdash_widget_toggle_create(p->title, p->key);
+      if (w != NULL) {
+        mgos_mdash_widgets_add_widget(widgets, w);
+      }
+    }
+  }
+}
+
+static void mdash_process_button(const struct mgos_config_mdash *cfg,
+                                 struct mgos_mdash_widgets *widgets) {
+  for (int i = 0; i < 3; ++i) {
+    const struct mgos_config_mdash_button *p = mdash_get_button(cfg, i);
+    if (p->enable) {
+      struct mgos_mdash_widget *w = mgos_mdash_widget_button_create(
+          p->title, p->method, p->params, p->icon);
+      if (w != NULL) {
+        mgos_mdash_widgets_add_widget(widgets, w);
+      }
+    }
+  }
+}
+
+bool mgos_mdash_create_widgets_from_config(
+    struct mgos_mdash_widgets **pwidgets) {
+  if (pwidgets == NULL) {
+    return false;
+  }
+
+  *pwidgets = mgos_mdash_widgets_create(0);
+  const struct mgos_config_mdash *cfg = mgos_sys_config_get_mdash();
+
+  mdash_process_value(cfg, *pwidgets);
+  mdash_process_input(cfg, *pwidgets);
+  mdash_process_toggle(cfg, *pwidgets);
+  mdash_process_button(cfg, *pwidgets);
+
+  return true;
 }
 
 bool mgos_mdash_api_init(void) {

@@ -53,8 +53,7 @@ struct mgos_mdash_widget *mgos_mdash_widget_button_create(const char *title,
 /* Input: show and change any state.reported.KEY shadow value */
 /* {"type": "input", "icon": "fa-save", title: "Set LED pin", "key": "pin"} */
 struct mgos_mdash_widget *mgos_mdash_widget_input_create(const char *title,
-                                                         const char *key,
-                                                         const char *icon);
+                                                         const char *key);
 
 /* free the widget */
 void mgos_mdash_widget_free(struct mgos_mdash_widget **widget);
@@ -73,6 +72,9 @@ void mgos_mdash_widgets_add_widget(struct mgos_mdash_widgets *widgets,
 
 /* free the widgets holder */
 void mgos_mdash_widgets_free(struct mgos_mdash_widgets *widgets);
+
+/* create the widgets from config */
+bool mgos_mdash_create_widgets_from_config(struct mgos_mdash_widgets **widgets);
 
 #ifdef __cplusplus
 }
