@@ -104,12 +104,37 @@ config_schema:
 ```
 - The code
 ```c
+#include "mgos.h"
+
+#include "mgos_mdash_api.h"
+
 static void create_mdash_ui() {
   struct mgos_mdash_widgets *widgets;
-  if (mgos_mdash_widgets_create_from_config(&widgets)) {
+  if (mgos_mdash_create_widgets_from_config(&widgets)) {
     mgos_mdash_create_ui(widgets);
   }
   mgos_mdash_widgets_free(widgets);
+}
+
+
+static void cloud_cb(int ev, void *evd, void *arg) {
+  switch (ev) {
+    case MGOS_EVENT_CLOUD_CONNECTED: {
+      LOG(LL_INFO, ("%s - Cloud connected", __FUNCTION__));
+      mgos_mdash_set_label("my_label");
+      create_mdash_ui();
+      break;
+    }
+  }
+
+  (void) evd;
+  (void) arg;
+}
+
+enum mgos_app_init_result mgos_app_init(void) {
+  mgos_event_add_handler(MGOS_EVENT_CLOUD_CONNECTED, cloud_cb, NULL);
+
+  return MGOS_APP_INIT_SUCCESS;
 }
 ```
 
