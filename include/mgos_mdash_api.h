@@ -66,15 +66,15 @@ bool mgos_mdash_create_ui(const struct mgos_mdash_widgets *widgets);
 /* create the widgets holder */
 struct mgos_mdash_widgets *mgos_mdash_widgets_create(size_t max_count);
 
+/* create the widgets from config */
+bool mgos_mdash_widgets_create_from_config(struct mgos_mdash_widgets **widgets);
+
 /* add a widget */
 void mgos_mdash_widgets_add_widget(struct mgos_mdash_widgets *widgets,
                                    struct mgos_mdash_widget *widget);
 
 /* free the widgets holder */
 void mgos_mdash_widgets_free(struct mgos_mdash_widgets *widgets);
-
-/* create the widgets from config */
-bool mgos_mdash_create_widgets_from_config(struct mgos_mdash_widgets **widgets);
 
 #ifdef __cplusplus
 }

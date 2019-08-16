@@ -550,7 +550,7 @@ static void mdash_process_button(const struct mgos_config_mdash *cfg,
   }
 }
 
-bool mgos_mdash_create_widgets_from_config(
+bool mgos_mdash_widgets_create_from_config(
     struct mgos_mdash_widgets **pwidgets) {
   if (pwidgets == NULL) {
     return false;
