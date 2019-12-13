@@ -42,7 +42,7 @@ config_schema:
   - ["mdash.value9.enable", false]
 # input widget max. 10
   - ["mdash.input", "o", {title: "mdash input widget config"}]
-  - ["mdash.input.enable", "b", true, {title: "mdash input widget - enable this widget"}]
+  - ["mdash.input.enable", "b", false, {title: "mdash input widget - enable this widget"}]
   - ["mdash.input.title", "s", "", {title: "mdash input widget - title"}]
   - ["mdash.input.key", "s", "", {title: "mdash input widget - key"}]
   - ["mdash.input1", "mdash.input", {title: "mdash input widget config 1"}]
@@ -65,7 +65,7 @@ config_schema:
   - ["mdash.input9.enable", false]
 # toggle widget max. 3
   - ["mdash.toggle", "o", {title: "mdash toggle widget config"}]
-  - ["mdash.toggle.enable", "b", true, {title: "mdash toggle widget - enable this widget"}]
+  - ["mdash.toggle.enable", "b", false, {title: "mdash toggle widget - enable this widget"}]
   - ["mdash.toggle.title", "s", "", {title: "mdash toggle widget - title"}]
   - ["mdash.toggle.key", "s", "", {title: "mdash toggle widget - key"}]
   - ["mdash.toggle1", "mdash.toggle", {title: "mdash toggle widget config 1"}]
@@ -74,7 +74,7 @@ config_schema:
   - ["mdash.toggle2.enable", false]
 # button widget max. 3
   - ["mdash.button", "o", {title: "mdash button widget config"}]
-  - ["mdash.button.enable", "b", true, {title: "mdash button widget - enable this widget"}]
+  - ["mdash.button.enable", "b", false, {title: "mdash button widget - enable this widget"}]
   - ["mdash.button.title", "s", "", {title: "mdash button widget - title"}]
   - ["mdash.button.method", "s", "", {title: "mdash button widget - method"}]
   - ["mdash.button.params", "s", "", {title: "mdash button widget - params"}]
